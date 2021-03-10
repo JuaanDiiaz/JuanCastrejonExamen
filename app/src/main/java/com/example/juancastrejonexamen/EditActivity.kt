@@ -40,7 +40,7 @@ class EditActivity : AppCompatActivity() {
                     poll.stockStore=binding.ckbInventarios.isChecked
                     poll.purchases=binding.ckbCompras.isChecked
                     poll.comments=binding.editTextTextMultiLine.text.toString()
-                    val request = listPolls.edit(id,poll)
+                    val request = listPolls.edit(position,poll)
                     if(request){
                         Toast.makeText(this@EditActivity,"Encuesta editada correctamente",Toast.LENGTH_SHORT).show()
                         finish()
