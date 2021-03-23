@@ -22,4 +22,11 @@
     <string name="hint_lastname">Apellido(s) del encuestado</string>
     <string name="txt_detail">Detalle</string>
     <string name="txt_edit">Editar encuesta</string>
+    <string name="txt_see_poll">Ver lista</string>
+    <string name="txt_recycler">Recycler View</string>
+    <string name="txt_graffic">¿que tipo de grafica le es mas facil de entender?</string>
+    <string name="txt_interests">¿que apartado le interesa mas?</string>
+    <string name="txt_comments">Comentarios extra</string>
+    <string name="txt_usertype">¿que puesto tiene dentro de la empresa?</string>
+    <string name="todo">TODO</string>
 </resources>

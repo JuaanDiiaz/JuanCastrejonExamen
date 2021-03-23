@@ -5,6 +5,7 @@
     android:fillViewport="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -57,7 +58,7 @@
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTextLastnName" >
+            app:layout_constraintTop_toBottomOf="@+id/textViewTypeOfGraffic">
 
             <RadioButton
                 android:id="@+id/rdbPastel"
@@ -65,12 +66,14 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:text="@string/txt_Pastel" />
+
             <RadioButton
                 android:id="@+id/rdbBarras"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:text="@string/txt_Barras" />
+
             <RadioButton
                 android:id="@+id/rdbPuntos"
                 android:layout_width="match_parent"
@@ -85,49 +88,51 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="horizontal"
-            app:layout_constraintGuide_begin="338dp" />
-
-        <CheckBox
-            android:id="@+id/ckbInventarios"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/txt_inventarios"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline2" />
+            app:layout_constraintGuide_begin="365dp" />
 
         <CheckBox
             android:id="@+id/ckbCompras"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
             android:layout_marginTop="20dp"
             android:text="@string/txt_ordenes"
-            app:layout_constraintStart_toEndOf="@+id/ckbInventarios"
-            app:layout_constraintTop_toTopOf="@+id/guideline2" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ckbInventarios" />
 
         <CheckBox
             android:id="@+id/ckbVentas"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
+            android:layout_marginStart="12dp"
             android:layout_marginTop="20dp"
             android:text="@string/txt_pedidos"
-            app:layout_constraintStart_toEndOf="@+id/ckbCompras"
-            app:layout_constraintTop_toTopOf="@+id/guideline2" />
+            app:layout_constraintStart_toEndOf="@+id/ckbInventarios"
+            app:layout_constraintTop_toBottomOf="@+id/textViewInterests" />
+
+        <CheckBox
+            android:id="@+id/ckbInventarios"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="64dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/txt_inventarios"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewInterests" />
 
         <EditText
             android:id="@+id/editTextTextMultiLine"
             android:layout_width="384dp"
             android:layout_height="108dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
+            android:autofillHints=""
             android:ems="10"
             android:gravity="start|top"
             android:inputType="textMultiLine"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.481"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ckbCompras"
-            android:autofillHints="" />
+            app:layout_constraintTop_toBottomOf="@+id/textViewComments" />
 
         <Spinner
             android:id="@+id/spnUserType"
@@ -136,18 +141,72 @@
             android:layout_marginTop="20dp"
             android:entries="@array/userTypes"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTextMultiLine" />
+            app:layout_constraintTop_toBottomOf="@+id/textViewUserType" />
 
         <Button
             android:id="@+id/buttonOk"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:text="@string/button_ok"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.508"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextTextMultiLine" />
+
+        <TextView
+            android:id="@+id/textViewTypeOfGraffic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:text="@string/txt_graffic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextTextLastnName" />
+
+        <TextView
+            android:id="@+id/textViewInterests"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:text="@string/txt_interests"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline2" />
+
+        <TextView
+            android:id="@+id/textViewComments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/txt_comments"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spnUserType" />
+
+        <TextView
+            android:id="@+id/textViewUserType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/txt_usertype"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ckbCompras" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

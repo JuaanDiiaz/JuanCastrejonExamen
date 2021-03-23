@@ -18,7 +18,6 @@ class DetailActivity : AppCompatActivity() {
         supportActionBar?.setTitle(R.string.txt_detail)
 
         val id:Int = intent.getIntExtra(Constants.ID,-1)
-        Toast.makeText(this@DetailActivity,"$id",Toast.LENGTH_SHORT).show()
         if(id!=-1){
             var poll = listPolls.getPoll(id)
             binding.textViewPollName.text = poll.pollName

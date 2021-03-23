@@ -1,26 +1,36 @@
 package com.example.juancastrejonexamen
 
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.example.juancastrejonexamen.Data.ListPolls
 import com.example.juancastrejonexamen.Entity.EntityPolls
 import com.example.juancastrejonexamen.Tools.Constants
+import com.example.juancastrejonexamen.Tools.PermissionAplication
 import com.example.juancastrejonexamen.databinding.ActivitySurveyBinding
 
 class SurveyActivity : AppCompatActivity() {
+    private val permissions = PermissionAplication(this@SurveyActivity)
     private lateinit var binding:ActivitySurveyBinding
     private val listPolls= ListPolls()
+    private var permissionsOk=true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySurveyBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.setTitle(R.string.txt_survey)
-
+        permissionsOk=false
         val id:Int = intent.getIntExtra(Constants.ID,-1)
         if(id!=-1){
             binding.buttonOk.setOnClickListener {
-                if(isAllCorrect()){
+                if(!permissions.hasPermission(Constants.PERMISSION_STORAGE[0])){
+                    permissions.acceptPermission(Constants.PERMISSION_STORAGE,1)
+                }else{
+                    permissionsOk=true
+                }
+                if(isAllCorrect() && permissionsOk){
                     val poll=EntityPolls()
                     poll.id_user=id
                     poll.pollName=binding.editTextTextPollName.text.toString()
@@ -43,6 +53,22 @@ class SurveyActivity : AppCompatActivity() {
             }
         }
 
+    }
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when(requestCode){
+            1->{
+                for(p in permissions){
+                    Log.d(Constants.LOG_TAG,p)
+                }
+                for(r in grantResults){
+                    if(r!= PackageManager.PERMISSION_GRANTED){
+                        permissionsOk=false
+                        Toast.makeText(this@SurveyActivity,"Es necesario conceder permisos de grabado de datos",Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
     }
     private fun isAllCorrect():Boolean{
         var correct = true

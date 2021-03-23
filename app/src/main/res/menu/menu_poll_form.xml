@@ -4,6 +4,9 @@
     <item android:id="@+id/itmNewPoll"
         android:title="@string/txt_new_poll"
         app:showAsAction="never"/>
+    <item android:id="@+id/itmSeePoll"
+        android:title="@string/txt_see_poll"
+        app:showAsAction="never"/>
     <item android:id="@+id/itmExit"
         android:title="@string/txt_exit"
         app:showAsAction="never"/>

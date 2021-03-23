@@ -2,29 +2,32 @@ package com.example.juancastrejonexamen
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.example.juancastrejonexamen.Data.ListPolls
 import com.example.juancastrejonexamen.Entity.EntityPolls
 import com.example.juancastrejonexamen.Tools.Constants
 import com.example.juancastrejonexamen.databinding.ActivityEditBinding
 import com.example.juancastrejonexamen.databinding.ActivityHomeBinding
+import kotlin.properties.Delegates
 
 class EditActivity : AppCompatActivity() {
-
+    private val position:Int by lazy {
+        intent.getIntExtra(Constants.Position,-1)
+    }
+    val id:Int by lazy {
+        intent.getIntExtra(Constants.ID,-1)
+    }
     private lateinit var binding: ActivityEditBinding
     private val listPolls= ListPolls()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityEditBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.setTitle(R.string.txt_edit)
 
-
-        val position:Int = intent.getIntExtra(Constants.ID,-1)
-        val id:Int = intent.getIntExtra(Constants.Position,-1)
-
-        Toast.makeText(this@EditActivity, "$id $position",Toast.LENGTH_SHORT).show()
-
+        Log.d("mensajes","id usuario: $id - index lista: $position")
         if(position!=-1 && id!=-1){
             cargaDatos(position)
             binding.buttonOk.setOnClickListener {
@@ -40,6 +43,7 @@ class EditActivity : AppCompatActivity() {
                     poll.stockStore=binding.ckbInventarios.isChecked
                     poll.purchases=binding.ckbCompras.isChecked
                     poll.comments=binding.editTextTextMultiLine.text.toString()
+                    Log.d("mensajes","${poll.id_user} $position")
                     val request = listPolls.edit(position,poll)
                     if(request){
                         Toast.makeText(this@EditActivity,"Encuesta editada correctamente",Toast.LENGTH_SHORT).show()
