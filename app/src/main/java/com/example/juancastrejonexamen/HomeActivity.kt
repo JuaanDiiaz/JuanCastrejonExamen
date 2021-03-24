@@ -32,10 +32,16 @@ class HomeActivity : AppCompatActivity() {
         supportActionBar?.setTitle(R.string.txt_home)
         permissionsOK=false
         if(id_user!=-1){
+            if(!permissions.hasPermission(Constants.PERMISSIONS_LOCATION[0])){
+                permissions.acceptPermission(Constants.PERMISSIONS_LOCATION,1)
+            }else{
+                permissionsOK=true
+            }
             getList(id_user)
             binding.ltvpolls.setOnItemClickListener { parent, view, position, id ->
+                permissionsOK=false
                 if(!permissions.hasPermission(Constants.PERMISSION_MICROPHONE[0])){
-                    permissions.acceptPermission(Constants.PERMISSION_MICROPHONE,1)
+                    permissions.acceptPermission(Constants.PERMISSION_MICROPHONE,2)
                 }else{
                     permissionsOK=true
                 }
@@ -89,8 +95,18 @@ class HomeActivity : AppCompatActivity() {
             1->{
                 for(r in grantResults){
                     if(r!= PackageManager.PERMISSION_GRANTED){
+                        Toast.makeText(this@HomeActivity,"Es necesario dar permiso de acceder a la localización",Toast.LENGTH_SHORT).show()
+                        permissionsOK=false
+                        finish()
+                    }
+                }
+            }
+            2->{
+                for(r in grantResults){
+                    if(r!= PackageManager.PERMISSION_GRANTED){
                         Toast.makeText(this@HomeActivity,"Es necesario dar permiso de acceder al microfono para continuar",Toast.LENGTH_SHORT).show()
                         permissionsOK=false
+                        finish()
                     }
                 }
             }

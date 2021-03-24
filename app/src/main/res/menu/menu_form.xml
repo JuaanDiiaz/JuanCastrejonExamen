@@ -4,6 +4,6 @@
 
     <item android:id="@+id/itmNewUser"
         android:title="@string/txt_new_user"
-        app:showAsAction="never"/>
+        app:showAsAction="never" />
 
 </menu>
