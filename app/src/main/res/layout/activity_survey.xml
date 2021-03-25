@@ -149,12 +149,11 @@
             android:id="@+id/buttonOk"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="40dp"
             android:text="@string/button_ok"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.508"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTextMultiLine" />
+            app:layout_constraintTop_toBottomOf="@+id/editTextTimePicker" />
 
         <TextView
             android:id="@+id/textViewTypeOfGraffic"
@@ -207,6 +206,36 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ckbCompras" />
+
+        <EditText
+            android:id="@+id/editTextDatePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            android:inputType="date"
+            android:clickable="true"
+            android:focusable="false"
+            android:hint="@string/hint_date"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextTextMultiLine"
+            android:autofillHints="" />
+
+        <EditText
+            android:id="@+id/editTextTimePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            android:inputType="time"
+            android:clickable="true"
+            android:focusable="false"
+            android:hint="@string/hint_time"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextDatePicker"
+            android:autofillHints="" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

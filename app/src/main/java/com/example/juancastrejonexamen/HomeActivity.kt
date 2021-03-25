@@ -21,6 +21,7 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
     private val listPolls= ListPolls()
     private var permissionsOK=true
+    private var pos:Int=-1
     private val id_user:Int by lazy {
         intent.getIntExtra(Constants.ID,-1)
     }
@@ -40,6 +41,7 @@ class HomeActivity : AppCompatActivity() {
             getList(id_user)
             binding.ltvpolls.setOnItemClickListener { parent, view, position, id ->
                 permissionsOK=false
+                pos=position
                 if(!permissions.hasPermission(Constants.PERMISSION_MICROPHONE[0])){
                     permissions.acceptPermission(Constants.PERMISSION_MICROPHONE,2)
                 }else{
@@ -107,6 +109,8 @@ class HomeActivity : AppCompatActivity() {
                         Toast.makeText(this@HomeActivity,"Es necesario dar permiso de acceder al microfono para continuar",Toast.LENGTH_SHORT).show()
                         permissionsOK=false
                         finish()
+                    }else{
+                        miDialogo(pos).show()
                     }
                 }
             }

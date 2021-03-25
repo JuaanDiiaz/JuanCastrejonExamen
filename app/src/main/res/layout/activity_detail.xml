@@ -25,6 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
+            android:text="nombre de la entrevista"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView2" />
@@ -34,8 +35,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:text="fecha de la encuesta"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textViewTipoUser"
             app:layout_constraintTop_toBottomOf="@+id/textViewPollName" />
 
         <TextView
@@ -44,6 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
+            android:text="nombre del encuestado"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewPollDate" />
 
@@ -53,6 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
+            android:text="grafica que prefiere"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewFullName" />
 
@@ -62,6 +66,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
+            android:text="almacenes"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewGrafics" />
 
@@ -71,17 +76,19 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
+            android:text="compras"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewAlmacenes" />
 
         <TextView
             android:id="@+id/textViewComments"
-            android:layout_width="171dp"
-            android:layout_height="133dp"
+            android:layout_width="322dp"
+            android:layout_height="126dp"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
+            android:text="comentarios"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewPollDate" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewVentas" />
 
         <TextView
             android:id="@+id/textViewVentas"
@@ -89,6 +96,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
+            android:text="ventas"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewCompras" />
 
@@ -96,9 +104,30 @@
             android:id="@+id/textViewTipoUser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="80dp"
             android:layout_marginTop="20dp"
+            android:text="tipo de usuario"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewPollName" />
+
+        <TextView
+            android:id="@+id/textViewDatePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="fecha elegida"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textViewVentas"
-            app:layout_constraintTop_toBottomOf="@+id/textViewComments" />
+            app:layout_constraintStart_toEndOf="@+id/textViewFullName"
+            app:layout_constraintTop_toBottomOf="@+id/textViewPollDate" />
+
+        <TextView
+            android:id="@+id/textViewTimePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="hora elegida"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textViewGrafics"
+            app:layout_constraintTop_toBottomOf="@+id/textViewDatePicker" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

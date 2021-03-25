@@ -30,6 +30,8 @@ class DetailActivity : AppCompatActivity() {
             binding.textViewTipoUser.text=if(poll.userType==1) "Operaciones" else if(poll.userType==2) "Administración" else if(poll.userType==3) "Tesoreria"
             else if(poll.userType==4) "Ventas" else if(poll.userType==5) "Inventario" else ""
             binding.textViewComments.text=if(poll.comments.isNotEmpty()) "${poll.comments}" else "Sin comentarios"
+            binding.textViewDatePicker.text="Fecha: ${poll.datePick}"
+            binding.textViewTimePicker.text="Hora: ${poll.timePick}"
         }
     }
 }

@@ -29,4 +29,6 @@
     <string name="txt_comments">Comentarios extra</string>
     <string name="txt_usertype">¿que puesto tiene dentro de la empresa?</string>
     <string name="todo">TODO</string>
+    <string name="hint_date">Click para elegir la fecha</string>
+    <string name="hint_time">Click para elegir la hora</string>
 </resources>

@@ -14,6 +14,20 @@ data class EntityPolls (
     var purchases:Boolean,
     var sales:Boolean,
     var userType:Int,
+    var datePick:String,
+    var timePick:String,
     var comments:String){
-    constructor():this(-1,"", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")),"","",0,false,false,false,0,"")
+    constructor():this(-1,
+            "",
+            LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")),
+            "",
+            "",
+            0,
+            false,
+            false,
+            false,
+            0,
+            "",
+            "",
+            "")
 }

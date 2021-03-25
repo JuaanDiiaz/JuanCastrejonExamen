@@ -32,6 +32,8 @@ class SurveyAdapter(val surveyList:ArrayList<EntityPolls>, val context: Context)
         holder.textViewFullName.text = "${surveyList[position].name} ${surveyList[position].lastName}"
         holder.textViewSurveyDate.text = surveyList[position].polldate
         holder.textViewSurveyName.text = surveyList[position].pollName
+        holder.textViewDatePicker.text = surveyList[position].datePick
+        holder.textViewTimePicker.text = surveyList[position].timePick
         if(surveyList[position].typeOfGrafic==1){
             holder.imageViewLogo.setImageResource(R.drawable.ic_leaderboard_black_24dp)
         }
@@ -91,4 +93,6 @@ class SurveyHolder(view: View): RecyclerView.ViewHolder(view){
     val imageButtonDelete= binding.imageButtonDelete
     val imageButtonEdit= binding.imageButtonEdit
     val imageButtonSee= binding.imageButtonSee
+    val textViewDatePicker = binding.textViewDatePicker
+    val textViewTimePicker = binding.textViewTimePicker
 }
