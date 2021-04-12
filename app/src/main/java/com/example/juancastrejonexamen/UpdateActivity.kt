@@ -6,31 +6,26 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import com.example.juancastrejonexamen.Data.ListPolls
+import com.example.juancastrejonexamen.Data.SurveyDB
 import com.example.juancastrejonexamen.Entity.EntitySurvey
 import com.example.juancastrejonexamen.Tools.Constants
-import com.example.juancastrejonexamen.databinding.ActivityEditBinding
+import com.example.juancastrejonexamen.databinding.ActivityRecyclerDbBinding
+import com.example.juancastrejonexamen.databinding.ActivityUpdateBinding
 import java.util.*
 
-class EditActivity : AppCompatActivity() {
-    private val position:Int by lazy {
-        intent.getIntExtra(Constants.Position,-1)
-    }
-    val id:Int by lazy {
+class UpdateActivity : AppCompatActivity() {
+    private lateinit var binding : ActivityUpdateBinding
+    private lateinit var poll : EntitySurvey
+    private val id_survey:Int by lazy {
         intent.getIntExtra(Constants.ID,-1)
     }
-    private lateinit var binding: ActivityEditBinding
-    private val listPolls= ListPolls()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityEditBinding.inflate(layoutInflater)
+        binding = ActivityUpdateBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        supportActionBar?.setTitle(R.string.txt_edit)
-
-        Log.d("mensajes","id usuario: $id - index lista: $position")
-        if(position!=-1 && id!=-1){
-            uploadData(position)
+        supportActionBar?.setTitle(R.string.txt_recycler)
+        if(id_survey != -1){
+            loadSurvey()
             binding.buttonOk.setOnClickListener {
                 if(isAllCorrect()){
                     saveData()
@@ -41,47 +36,24 @@ class EditActivity : AppCompatActivity() {
                 val year= myCalendar.get(Calendar.YEAR)
                 val month= myCalendar.get(Calendar.MONTH)
                 val day= myCalendar.get(Calendar.DAY_OF_MONTH)
-                val dpd = DatePickerDialog(this@EditActivity, DatePickerDialog.OnDateSetListener { view, y, m, d ->
+                val dpd = DatePickerDialog(this@UpdateActivity, DatePickerDialog.OnDateSetListener { view, y, m, d ->
                     binding.editTextDatePicker.setText("${twoDigits(d)} / ${twoDigits(m+1)} / $y")
                 },year,month,day)
                 dpd.show()
             }
             binding.editTextTimePicker.setOnClickListener {
-                val myCalendar=Calendar.getInstance()
+                val myCalendar= Calendar.getInstance()
                 val h = myCalendar.get(Calendar.HOUR_OF_DAY)
                 val m = myCalendar.get(Calendar.MINUTE)
-                val tpd = TimePickerDialog(this@EditActivity, TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
+                val tpd = TimePickerDialog(this@UpdateActivity, TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
                     binding.editTextTimePicker.setText("${twoDigits(hourOfDay)}:${twoDigits(minute)}")
                 },h,m,true)
                 tpd.show()
             }
         }
     }
-    private fun saveData(){
-        val poll= EntitySurvey()
-        poll.id_user=id
-        poll.pollName=binding.editTextTextPollName.text.toString()
-        poll.name=binding.editTextTextPersonName.text.toString()
-        poll.lastName=binding.editTextTextLastnName.text.toString()
-        poll.typeOfGraphic=if(binding.rdbBarras.isChecked) 1 else if(binding.rdbPastel.isChecked) 2 else if(binding.rdbPuntos.isChecked) 3 else 0
-        poll.userType=binding.spnUserType.selectedItemPosition
-        poll.sales=binding.ckbVentas.isChecked
-        poll.stockStore=binding.ckbInventarios.isChecked
-        poll.purchases=binding.ckbCompras.isChecked
-        poll.comments=binding.editTextTextMultiLine.text.toString()
-        poll.datePick=binding.editTextDatePicker.text.toString()
-        poll.timePick=binding.editTextTimePicker.text.toString()
-        Log.d("mensajes","${poll.id_user} $position")
-        val request = listPolls.edit(position,poll)
-        if(request){
-            Toast.makeText(this@EditActivity,"Encuesta editada correctamente",Toast.LENGTH_SHORT).show()
-            finish()
-        }else{
-            Toast.makeText(this@EditActivity,"Error al editar la encuesta",Toast.LENGTH_SHORT).show()
-        }
-    }
-    private fun uploadData(index:Int){
-        val poll = listPolls.getPoll(index)
+    fun loadSurvey(){
+        poll = SurveyDB(this@UpdateActivity).getOne(id_survey)
         binding.editTextTextPollName.setText(poll.pollName)
         binding.editTextTextPersonName.setText(poll.name)
         binding.editTextTextLastnName.setText(poll.lastName)
@@ -103,6 +75,30 @@ class EditActivity : AppCompatActivity() {
         binding.spnUserType.setSelection(poll.userType)
         binding.editTextDatePicker.setText(poll.datePick)
         binding.editTextTimePicker.setText(poll.timePick)
+    }
+    private fun saveData(){
+        val poll2= EntitySurvey()
+        poll2.id_user=poll.id_user
+        poll2.id=poll.id
+        poll2.pollName=binding.editTextTextPollName.text.toString()
+        poll2.name=binding.editTextTextPersonName.text.toString()
+        poll2.lastName=binding.editTextTextLastnName.text.toString()
+        poll2.typeOfGraphic=if(binding.rdbBarras.isChecked) 1 else if(binding.rdbPastel.isChecked) 2 else if(binding.rdbPuntos.isChecked) 3 else 0
+        poll2.userType=binding.spnUserType.selectedItemPosition
+        poll2.sales=binding.ckbVentas.isChecked
+        poll2.stockStore=binding.ckbInventarios.isChecked
+        poll2.purchases=binding.ckbCompras.isChecked
+        poll2.comments=binding.editTextTextMultiLine.text.toString()
+        poll2.datePick=binding.editTextDatePicker.text.toString()
+        poll2.timePick=binding.editTextTimePicker.text.toString()
+        Log.d("mensajes","${poll2.id_user} ")
+        val request = SurveyDB(this@UpdateActivity).update(poll2)
+        if(request>0){
+            Toast.makeText(this@UpdateActivity,"Encuesta editada correctamente", Toast.LENGTH_SHORT).show()
+            finish()
+        }else{
+            Toast.makeText(this@UpdateActivity,"Error al editar la encuesta", Toast.LENGTH_SHORT).show()
+        }
     }
     private fun isAllCorrect():Boolean{
         var correct = true
@@ -141,7 +137,7 @@ class EditActivity : AppCompatActivity() {
             message+=" *Seleccionar hora"
         }
         if(!correct){
-            Toast.makeText(this@EditActivity,message, Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@UpdateActivity,message, Toast.LENGTH_SHORT).show()
         }
         return correct
     }

@@ -9,26 +9,25 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.example.juancastrejonexamen.*
 import com.example.juancastrejonexamen.Data.ListPolls
-import com.example.juancastrejonexamen.DetailActivity
-import com.example.juancastrejonexamen.EditActivity
+import com.example.juancastrejonexamen.Data.SurveyDB
 import com.example.juancastrejonexamen.Entity.EntitySurvey
-import com.example.juancastrejonexamen.R
 import com.example.juancastrejonexamen.Tools.Constants
-import com.example.juancastrejonexamen.databinding.ItemSurveysBinding
+import com.example.juancastrejonexamen.databinding.ItemSurveysDbBinding
 import com.google.android.material.snackbar.Snackbar
 
-class SurveyAdapter(val surveyList:ArrayList<EntitySurvey>, val context: Context): RecyclerView.Adapter<SurveyHolder>(){
+class SurveyAdapterDB(val surveyList:ArrayList<EntitySurvey>, val context: Context): RecyclerView.Adapter<SurveyHolderDB>(){
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SurveyHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SurveyHolderDB {
         val inflater = LayoutInflater.from(parent.context)
-        return SurveyHolder(inflater.inflate(R.layout.item_surveys,parent,false))
+        return SurveyHolderDB(inflater.inflate(R.layout.item_surveys_db,parent,false))
     }
 
     override fun getItemCount(): Int {
         return surveyList.size
     }
-    override fun onBindViewHolder(holder: SurveyHolder, position: Int) {
+    override fun onBindViewHolder(holder: SurveyHolderDB, position: Int) {
         holder.textViewFullName.text = "${surveyList[position].name} ${surveyList[position].lastName}"
         holder.textViewSurveyDate.text = surveyList[position].polldate
         holder.textViewSurveyName.text = surveyList[position].pollName
@@ -46,31 +45,29 @@ class SurveyAdapter(val surveyList:ArrayList<EntitySurvey>, val context: Context
         val listSurvey = ListPolls()
         val positionList = listSurvey.getPollIndex(surveyList[position].id_user,position)
         holder.imageButtonDelete.setOnClickListener{
-            myDialog(position,positionList,it).show()
+            myDialog(surveyList[position].id,position,it).show()
         }
         holder.imageButtonEdit.setOnClickListener{
             notifyItemChanged(position)
-            val intent = Intent(context, EditActivity::class.java).apply {
-                putExtra(Constants.Position,positionList)
-                putExtra(Constants.ID,surveyList[position].id_user)
+            val intent = Intent(context, UpdateActivity::class.java).apply {
+                putExtra(Constants.ID,surveyList[position].id)
             }
             context.startActivity(intent)
         }
         holder.imageButtonSee.setOnClickListener{
-            val intent = Intent(context, DetailActivity::class.java).apply {
-                putExtra(Constants.ID,positionList)
+            val intent = Intent(context, SeeSurveyActivity::class.java).apply {
+                putExtra(Constants.ID,surveyList[position].id)
             }
             context.startActivity(intent)
         }
     }
-    private fun myDialog(position: Int,positionList:Int,view: View): AlertDialog {
+    private fun myDialog(id:Int,position:Int,view: View): AlertDialog {
         val myAlert = AlertDialog.Builder(context)
         myAlert.setTitle("EstudiantesJuan v0.1")
         myAlert.setIcon(R.drawable.ic_add_circle_black_24dp)
         myAlert.setMessage("¿Desea eliminar la encuesta seleccionada?")
         myAlert.setPositiveButton("Simón"){ dialogInterface: DialogInterface, i: Int ->
-            val listSurvey = ListPolls()
-            if(listSurvey.delete(positionList)){
+            if(SurveyDB(context).delete(id)!=0){
                 surveyList.removeAt(position)
                 Toast.makeText(context,"Encuesta eliminada exitosamente", Toast.LENGTH_SHORT).show()
                 notifyDataSetChanged()
@@ -84,8 +81,8 @@ class SurveyAdapter(val surveyList:ArrayList<EntitySurvey>, val context: Context
     }
 
 }
-class SurveyHolder(view: View): RecyclerView.ViewHolder(view){
-    val binding = ItemSurveysBinding.bind(view)
+class SurveyHolderDB(view: View): RecyclerView.ViewHolder(view){
+    val binding = ItemSurveysDbBinding.bind(view)
     val imageViewLogo = binding.imageViewLogo
     val textViewFullName = binding.textViewFullName
     val textViewSurveyName = binding.textViewSurveyName

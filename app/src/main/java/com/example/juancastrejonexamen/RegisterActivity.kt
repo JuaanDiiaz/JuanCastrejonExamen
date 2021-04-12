@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.example.juancastrejonexamen.Data.ListUsers
+import com.example.juancastrejonexamen.Data.UserDB
 import com.example.juancastrejonexamen.Entity.EntityUser
 import com.example.juancastrejonexamen.databinding.ActivityRegisterBinding
 
@@ -18,14 +19,14 @@ class RegisterActivity : AppCompatActivity() {
 
         binding.buttonOk.setOnClickListener {
             if(isAllCorrect()){
-                var user = EntityUser();
+                val user = EntityUser();
                 user.id_user=listUsers.getSize()+1
-                user.userMail=binding.editTextTextEmail.text.toString()
-                user.pass= binding.editTextTextPassword.text.toString()
-                user.tel=binding.editTextPhone.text.toString()
+                user.userMail=binding.editTextTextEmail.text.toString().trim()
+                user.pass= binding.editTextTextPassword.text.toString().trim()
+                user.tel=binding.editTextPhone.text.toString().trim()
                 user.gender=binding.spinnerGender.selectedItemPosition
-                var result = listUsers.add(user)
-                if(result != -1){
+                val result = UserDB(this@RegisterActivity).add(user)
+                if(result != (-1).toLong()){
                     Toast.makeText(this@RegisterActivity,"Usuario creado correctamente",Toast.LENGTH_SHORT).show()
                     finish()
                 }else{

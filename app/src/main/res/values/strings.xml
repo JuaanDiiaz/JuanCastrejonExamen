@@ -31,4 +31,5 @@
     <string name="todo">TODO</string>
     <string name="hint_date">Click para elegir la fecha</string>
     <string name="hint_time">Click para elegir la hora</string>
+    <string name="txt_see_db">Lista BD</string>
 </resources>

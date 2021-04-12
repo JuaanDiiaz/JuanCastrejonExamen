@@ -1,11 +1,10 @@
 package com.example.juancastrejonexamen.Data
 
 import android.util.Log
-import com.example.juancastrejonexamen.Entity.EntityPolls
-import com.example.juancastrejonexamen.Entity.EntityUser
+import com.example.juancastrejonexamen.Entity.EntitySurvey
 
 class ListPolls {
-    fun add(poll:EntityPolls):Int{
+    fun add(poll:EntitySurvey):Int{
         var answer = -1
         if(!existPollFilter(poll.pollName)){
             listPolls.add(poll)
@@ -20,7 +19,7 @@ class ListPolls {
         }
         return answer
     }
-    fun edit(index:Int,poll:EntityPolls):Boolean{
+    fun edit(index:Int,poll:EntitySurvey):Boolean{
         if(index >-1 && index < listPolls.size){
             listPolls[index]=poll
             return true
@@ -38,7 +37,7 @@ class ListPolls {
         }
         return -1
     }
-    fun getPoll(index:Int):EntityPolls{
+    fun getPoll(index:Int):EntitySurvey{
         return listPolls[index]
     }
 
@@ -49,8 +48,8 @@ class ListPolls {
         }
         return false
     }
-    fun getListPollsArray(id:Int): ArrayList<EntityPolls>{
-        val answerList= arrayListOf<EntityPolls>()
+    fun getListPollsArray(id:Int): ArrayList<EntitySurvey>{
+        val answerList= arrayListOf<EntitySurvey>()
         for((index,item) in listPolls.filter { e -> e.id_user==id }.withIndex()){
             answerList.add(item)
         }
@@ -64,6 +63,6 @@ class ListPolls {
         return answerList.toTypedArray()
     }
     companion object {
-        private var listPolls= ArrayList<EntityPolls>()
+        private var listPolls= ArrayList<EntitySurvey>()
     }
 }

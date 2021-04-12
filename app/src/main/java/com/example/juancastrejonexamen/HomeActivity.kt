@@ -22,8 +22,8 @@ class HomeActivity : AppCompatActivity() {
     private val listPolls= ListPolls()
     private var permissionsOK=true
     private var pos:Int=-1
-    private val id_user:Int by lazy {
-        intent.getIntExtra(Constants.ID,-1)
+    private val id_user:Long by lazy {
+        intent.getLongExtra(Constants.ID,-1)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,13 +32,13 @@ class HomeActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.setTitle(R.string.txt_home)
         permissionsOK=false
-        if(id_user!=-1){
+        if(id_user!=(-1).toLong()){
             if(!permissions.hasPermission(Constants.PERMISSIONS_LOCATION[0])){
                 permissions.acceptPermission(Constants.PERMISSIONS_LOCATION,1)
             }else{
                 permissionsOK=true
             }
-            getList(id_user)
+            getList(id_user.toInt())
             binding.ltvpolls.setOnItemClickListener { parent, view, position, id ->
                 permissionsOK=false
                 pos=position
@@ -65,18 +65,26 @@ class HomeActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.itmNewPoll->{
-                if(id_user!=-1){
+                if(id_user!=(-1).toLong()){
                     val intent = Intent(this@HomeActivity,SurveyActivity::class.java).apply {
-                        putExtra(Constants.ID,id_user)
+                        putExtra(Constants.ID,id_user.toInt())
                     }
                     startActivity(intent)
                 }
             }
             R.id.itmExit->finish()
             R.id.itmSeePoll->{
-                if(id_user!=-1){
+                if(id_user!=(-1).toLong()){
                     val intent = Intent(this@HomeActivity,RecyclerActivity::class.java).apply {
-                        putExtra(Constants.ID,id_user)
+                        putExtra(Constants.ID,id_user.toInt())
+                    }
+                    startActivity(intent)
+                }
+            }
+            R.id.itmSeeDB->{
+                if(id_user!=(-1).toLong()){
+                    val intent = Intent(this@HomeActivity,RecyclerDbActivity::class.java).apply {
+                        putExtra(Constants.ID,id_user.toInt())
                     }
                     startActivity(intent)
                 }
@@ -86,9 +94,9 @@ class HomeActivity : AppCompatActivity() {
     }
     override fun onRestart() {
         super.onRestart()
-        if(id_user!=-1){
+        if(id_user!=(-1).toLong()){
             Log.d("mensajes","id usuario: $id_user")
-            getList(id_user)
+            getList(id_user.toInt())
         }
     }
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -119,29 +127,29 @@ class HomeActivity : AppCompatActivity() {
     private fun miDialogo(index:Int): AlertDialog {
         val miAlerta = AlertDialog.Builder(this@HomeActivity)
         Log.d("mensajes","id usuario: $index ")
-        Log.d("mensajes","id usuario: $id_user - index lista: ${listPolls.getPollIndex(id_user,index)}")
+        Log.d("mensajes","id usuario: $id_user - index lista: ${listPolls.getPollIndex(id_user.toInt(),index)}")
         miAlerta.setTitle("Mensaje del sistema")
         miAlerta.setMessage("¿Que acción desea realizar con el estudiante?")
         miAlerta.setPositiveButton("Editar"){_,_ ->
             val intent = Intent(this@HomeActivity,EditActivity::class.java).apply {
                 putExtra(Constants.ID,id_user)
                 Log.d("mensajes","id usuario: $id_user ")
-                putExtra(Constants.Position,listPolls.getPollIndex(id_user,index))
+                putExtra(Constants.Position,listPolls.getPollIndex(id_user.toInt(),index))
             }
             startActivity(intent)
         }
         miAlerta.setNeutralButton("Visualizar"){_,_ ->
             val intent = Intent(this@HomeActivity,DetailActivity::class.java).apply {
-                putExtra(Constants.ID,listPolls.getPollIndex(id_user,index))
+                putExtra(Constants.ID,listPolls.getPollIndex(id_user.toInt(),index))
             }
             startActivity(intent)
         }
         miAlerta.setNegativeButton("Eliminar"){_,_ ->
-            var request = listPolls.delete(listPolls.getPollIndex(id_user,index))
+            var request = listPolls.delete(listPolls.getPollIndex(id_user.toInt(),index))
             if(request){
                 Toast.makeText(this@HomeActivity,"Registro eliminado",Toast.LENGTH_SHORT).show()
-                if(id_user!=-1){
-                    getList(id_user)
+                if(id_user!=(-1).toLong()){
+                    getList(id_user.toInt())
                 }
             }
         }

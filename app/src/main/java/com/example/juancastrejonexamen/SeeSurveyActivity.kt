@@ -2,22 +2,23 @@ package com.example.juancastrejonexamen
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.juancastrejonexamen.Data.ListPolls
+import com.example.juancastrejonexamen.Data.SurveyDB
 import com.example.juancastrejonexamen.Tools.Constants
 import com.example.juancastrejonexamen.databinding.ActivityDetailBinding
+import com.example.juancastrejonexamen.databinding.ActivitySeeSurveyBinding
+import com.example.juancastrejonexamen.databinding.ActivityUpdateBinding
 
-class DetailActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityDetailBinding
-    private val listPolls= ListPolls()
+class SeeSurveyActivity : AppCompatActivity() {
+    private lateinit var binding: ActivitySeeSurveyBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityDetailBinding.inflate(layoutInflater)
+        binding = ActivitySeeSurveyBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.setTitle(R.string.txt_detail)
 
         val id:Int = intent.getIntExtra(Constants.ID,-1)
         if(id!=-1){
-            val poll = listPolls.getPoll(id)
+            val poll = SurveyDB(this@SeeSurveyActivity).getOne(id)
             binding.textViewPollName.text = poll.pollName
             binding.textViewPollDate.text = poll.polldate
             binding.textViewFullName.text = "${poll.name} ${poll.lastName}"
