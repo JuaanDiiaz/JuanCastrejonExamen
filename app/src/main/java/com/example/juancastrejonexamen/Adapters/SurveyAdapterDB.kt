@@ -17,7 +17,7 @@ import com.example.juancastrejonexamen.Tools.Constants
 import com.example.juancastrejonexamen.databinding.ItemSurveysDbBinding
 import com.google.android.material.snackbar.Snackbar
 
-class SurveyAdapterDB(val surveyList:ArrayList<EntitySurvey>, val context: Context): RecyclerView.Adapter<SurveyHolderDB>(){
+class SurveyAdapterDB(private var surveyList:ArrayList<EntitySurvey>, val context: Context): RecyclerView.Adapter<SurveyHolderDB>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SurveyHolderDB {
         val inflater = LayoutInflater.from(parent.context)
@@ -42,8 +42,6 @@ class SurveyAdapterDB(val surveyList:ArrayList<EntitySurvey>, val context: Conte
         if(surveyList[position].typeOfGraphic==3){
             holder.imageViewLogo.setImageResource(R.drawable.ic_trending_up_black_24dp)
         }
-        val listSurvey = ListPolls()
-        val positionList = listSurvey.getPollIndex(surveyList[position].id_user,position)
         holder.imageButtonDelete.setOnClickListener{
             myDialog(surveyList[position].id,position,it).show()
         }

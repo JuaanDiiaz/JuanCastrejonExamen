@@ -40,7 +40,7 @@ class RecyclerDbActivity : AppCompatActivity() {
         super.onRestart()
         loadRecycler()
     }
-    fun loadRecycler(){
+    private fun loadRecycler(){
         val list = SurveyDB(this@RecyclerDbActivity).getAllByUser(id_user)
         Log.d(Constants.LOG_TAG,list.toString())
         Log.d(Constants.LOG_TAG,id_user.toString())
